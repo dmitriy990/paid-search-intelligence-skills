@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "ivatech-paid-search",
+  "description": "Paid search intelligence skill for Google Ads and GA4 data in BigQuery.",
+  "owner": {
+    "name": "IvaTech"
+  },
+  "plugins": [
+    {
+      "name": "paid-search-intelligence",
+      "source": "./",
+      "description": "Analyst, Optimizer and Product Manager roles for Google Ads and GA4 data in BigQuery: diagnosis, change sets, tracking specs and experiments.",
+      "tags": ["google-ads", "ga4", "bigquery", "paid-search"]
+    }
+  ]
+}
