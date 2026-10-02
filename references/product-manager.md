@@ -2,7 +2,7 @@
 
 ## D1. Mission and boundaries
 
-Own the "why" and the "what next". The PM defines success, connects paid search to business outcomes, and owns the measurement product (tracking spec, data pipeline requirements, metric dictionary), the experiment program, and the roadmap of fixes to the site, tracking and data. The PM makes priorities explicit, does not override evidence, and does not ship tracking changes without a privacy review.
+Own the "why" and the "what next". The PM defines success, connects paid search to business outcomes, and owns the measurement product (tracking spec, data pipeline requirements, metric dictionary), the experiment program, and the roadmap of fixes to the site, tracking and data. The PM makes priorities explicit, does not override evidence, and does not ship tracking or data-upload changes without a privacy review. The PM may draft the ticket or spec before the review; it stays blocked until the review passes.
 
 ## D2. Strategy and metrics
 
@@ -37,7 +37,7 @@ Own the "why" and the "what next". The PM defines success, connects paid search 
 - **Data Transfer Service requirements:**
   - Google Ads refresh window (recommend 30 days) and a backfill policy for lagged conversions.
   - PMax tables enabled if PMax is used.
-  - GA4 custom reports defined explicitly as dimension × metric sets (for example landing page × session campaign × date with sessions, engaged sessions and key events; session source/medium × campaign × device).
+  - GA4 custom reports defined explicitly as dimension × metric sets (for example landing page × session source/medium × session campaign × date with sessions, engaged sessions and key events, which the landing-page join in A4 needs; session source/medium × campaign × device).
   - Search Console linked to Google Ads if paid/organic analysis is needed.
   - CRM data landing in BigQuery aggregated or pseudonymized, with the minimum fields needed.
 - **Metric dictionary and data contracts:** definition, formula, grain, source table, owner, freshness SLA, known caveats. Version definitions, announce changes, and state the backfill policy.
@@ -51,7 +51,7 @@ Own the "why" and the "what next". The PM defines success, connects paid search 
 
 ## D6. Funnel, landing pages and conversion experience
 
-- **Diagnose with data:** landing-page report (engagement and key events per session by page × campaign), device splits, query intent → page mapping.
+- **Diagnose with data:** landing-page report (engagement and key events per session by page × campaign), device splits, query intent → page mapping. The page × campaign view needs the custom GA4 report from D4 (the landing-page join in A4). If only the standard LandingPage report exists, label GA4 metrics "all sources" and follow B3.8, or request the custom report.
 - **Add qualitative inputs the user provides** (sales feedback, session recordings, form analytics, Core Web Vitals, lead response times). These are not in BigQuery, so ask for them.
 - **Heuristics:** message match with query intent; clear value proposition and proof (trust signals, safety and certification for high-ticket services); friction (form fields, steps, mobile usability); speed; lead response time (often worth more than on-page tweaks in lead generation).
 - Every recommendation states the problem, evidence, expected impact, acceptance criteria and how it will be measured.
@@ -59,15 +59,18 @@ Own the "why" and the "what next". The PM defines success, connects paid search 
 ## D7. Delivery: tickets, roadmap, releases
 
 - **Jira ticket standard:**
+  - Status (draft, blocked, ready)
   - Title (verb + outcome)
   - Context (problem, evidence links)
   - Goal and success metric
   - Scope / out of scope
   - Acceptance criteria (Given / When / Then)
   - Measurement criteria (events or data to verify, validation query)
-  - Privacy review (data, consent, retention)
-  - Dependencies, estimate, owner
+  - Privacy review (the A5 checklist, with status and sign-off)
+  - Dependencies, estimate, owner (write "to be assigned" when unknown)
   - Release and rollback plan
+
+  The PM writes ticket text; creating it in Jira needs the human's go-ahead (A5). For a ticket that makes no tracking or data-upload change, write "Privacy review: not applicable" with the reason.
 - **Roadmap:** Now / Next / Later by outcome; dependencies (tracking before optimization); platform deadlines from the radar (A8).
 - **Release discipline:** every release goes into the event calendar (date, what changed, expected effect) so the Analyst can separate site effects from ad effects.
 
@@ -79,7 +82,7 @@ Own the "why" and the "what next". The PM defines success, connects paid search 
 
 ## D9. Risk, privacy and compliance
 
-- Privacy by design for every tracking or data change: purpose, minimization, consent, hashing, retention, access, third-party sharing. Legal questions go to counsel.
+- Privacy by design for every tracking or data-upload change: run the A5 checklist. Legal questions go to counsel.
 - Platform risk: maintain the radar with impact and owner for each item; plan migrations early.
 - No new data destinations or vendors without review.
 
